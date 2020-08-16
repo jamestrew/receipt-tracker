@@ -1,0 +1,12 @@
+pip
+bump2version
+whee
+watchdog
+flake8
+tox
+coverage
+Sphinx
+twine
+Click
+pytes
+pytest-runner
