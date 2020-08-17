@@ -18,6 +18,10 @@ def test_person_from_dict():
         }
     )
 
+    assert person.id == 1
+    assert person.fname == "James"
+    assert person.lname == "Trew"
+
 
 def test_person_to_dict():
     person_dict = {
