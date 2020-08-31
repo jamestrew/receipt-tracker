@@ -17,23 +17,22 @@ def receipt_repo():
     )
 
     receipt2 = receipt.Receipt(
-        id=1, date=datetime.datetime(2020, 8, 17),
+        id=2, date=datetime.datetime(2020, 8, 17),
         seller=2, total=17.86,
         description="Groceries",
         person=1
     )
 
     receipt3 = receipt.Receipt(
-        id=1, date=datetime.datetime(2020, 8, 18),
+        id=3, date=datetime.datetime(2020, 8, 18),
         seller=3, total=57.36,
         description="Random amazon purchases",
         person=2
     )
 
     receipt4 = receipt.Receipt(
-        id=1, date=datetime.datetime(2020, 8, 19),
+        id=4, date=datetime.datetime(2020, 8, 19),
         seller=4, total=2.50,
-        description="Coin laundry",
         person=2
     )
 
@@ -41,13 +40,8 @@ def receipt_repo():
 
 @pytest.fixture
 def person_repo():
-    person1 = person.Person(
-        id=1, fname='James', lname='Trew'
-    )
-
-    person2 = person.Person(
-        id=2, fname='Eugene', lname='Min'
-    )
+    person1 = person.Person(id=1, fname='James', lname='Trew')
+    person2 = person.Person(id=2, fname='Eugene', lname='Min')
 
     return [person1, person2]
 
@@ -73,6 +67,41 @@ def test_list_without_parameters(receipt_repo, person_repo, seller_repo):
     s_repo = Mock()
     s_repo.list.return_value = seller_repo
 
-    list_ = list_uc.ListUseCase(person_repo, receipt_repo, seller_repo)
+    test_list = list_uc.ListUseCase(person_repo, receipt_repo, seller_repo)
 
+    result = [
+        {
+            'id': 1,
+            'date': '2020/08/16',
+            'seller': 'Steam',
+            'total': '$9.67',
+            'person': 'James Trew',
+            'description': 'Steam game'
+        },
+        {
+            'id': 2,
+            'date': '2020/08/17',
+            'seller': 'No Frills',
+            'total': '$17.86',
+            'person': 'James Trew',
+            'description': 'Groceries'
+        },
+        {
+            'id': 3,
+            'date': '2020/08/18',
+            'seller': 'Amazon',
+            'total': '$57.36',
+            'person': 'Eugene Min',
+            'description': 'Random amazon purchases'
+        },
+        {
+            'id': 4,
+            'date': '2020/08/19',
+            'seller': 'Always Clean Coin Laundry',
+            'total': '$2.50',
+            'person': 'Eugene Min',
+            'description': ''
+        },
+    ]
 
+    assert test_list.execute() == result

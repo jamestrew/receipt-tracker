@@ -6,11 +6,11 @@ class Receipt():
 
         date (datetime): Date of purchase. !! May be interested in converting !!
 
-        seller (str): Name of seller.
+        seller (id): Foreign key from Seller class.
 
         total (float): Cost of purchase.
 
-        person (int): Foreign key from Person class
+        person (int): Foreign key from Person class.
 
         description (str): [Optional] Description of purchase (product, etc).
 
