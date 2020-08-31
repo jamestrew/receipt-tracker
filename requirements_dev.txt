@@ -10,3 +10,6 @@ twine
 Click
 pytes
 pytest-runner
+flask-login
+flask-wtf
+wtforms
