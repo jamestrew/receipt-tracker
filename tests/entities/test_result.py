@@ -2,6 +2,7 @@ import datetime
 
 from receipt_tracker.entities.results import Result
 
+
 def test_result_init():
     result = Result(
         id=1, date=datetime.datetime(2020, 8, 16),

@@ -38,12 +38,14 @@ def receipt_repo():
 
     return [receipt1, receipt2, receipt3, receipt4]
 
+
 @pytest.fixture
 def person_repo():
     person1 = person.Person(id=1, fname='James', lname='Trew')
     person2 = person.Person(id=2, fname='Eugene', lname='Min')
 
     return [person1, person2]
+
 
 @pytest.fixture
 def seller_repo():
