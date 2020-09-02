@@ -40,7 +40,7 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="#">Receipt</a>
-                            <a class="dropdown-item" href="#">Buyer</a>
+                            <a class="dropdown-item" href="/new_client">Buyer</a>
                             <a class="dropdown-item" href="#">Seller</a>
                         </div>
                     </li>
@@ -52,6 +52,16 @@
     <main role="main" class="container">
         <div class="row">
             <div class="col-md-8">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
                 {% block content %}{% endblock %}
             </div>
         </div>
