@@ -1,11 +1,13 @@
-from flask import Flask, render_template
+import flask
+from flask import Flask
 
 app = Flask(__name__)
+
 
 @app.route('/')
 @app.route('/home')
 def home():
-    return render_template('layout.html')
+    return flask.render_template('layout.html')
 
 
 if __name__ == "__main__":

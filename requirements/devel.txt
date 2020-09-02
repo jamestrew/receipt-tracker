@@ -3,6 +3,7 @@ Sphinx
 bump2version
 coverage
 flake8
+flask
 flask-login
 flask-wtf
 pip
