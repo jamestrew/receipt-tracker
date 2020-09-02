@@ -1,16 +1,16 @@
-from receipt_tracker.entities import person as p
+from receipt_tracker.entities import client as c
 
 
 def test_person_init():
-    person = p.Person(id=1, fname="James", lname="Trew")
+    client = c.Client(id=1, fname="James", lname="Trew")
 
-    assert person.id == 1
-    assert person.fname == "James"
-    assert person.lname == "Trew"
+    assert client.id == 1
+    assert client.fname == "James"
+    assert client.lname == "Trew"
 
 
 def test_person_from_dict():
-    person = p.Person.from_dict(
+    client = c.Client.from_dict(
         {
             'id': 1,
             'fname': "James",
@@ -18,17 +18,17 @@ def test_person_from_dict():
         }
     )
 
-    assert person.id == 1
-    assert person.fname == "James"
-    assert person.lname == "Trew"
+    assert client.id == 1
+    assert client.fname == "James"
+    assert client.lname == "Trew"
 
 
-def test_person_to_dict():
-    person_dict = {
+def test_client_to_dict():
+    client_dict = {
         'id': 1,
         'fname': "James",
         'lname': "Trew"
     }
 
-    person = p.Person.from_dict(person_dict)
-    assert person.to_dict() == person_dict
+    client = c.Client.from_dict(client_dict)
+    assert client.to_dict() == client_dict

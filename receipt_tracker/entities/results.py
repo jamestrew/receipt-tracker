@@ -1,5 +1,5 @@
 
-class Result():
+class Result(object):
     """Generic class for holding receipt/seller/person combination data.
         Potentially unnecessary.
     """
