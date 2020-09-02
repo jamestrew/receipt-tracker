@@ -1,6 +1,6 @@
 pip
 bump2version
-whee
+wheel
 watchdog
 flake8
 tox
@@ -8,7 +8,7 @@ coverage
 Sphinx
 twine
 Click
-pytes
+pytest
 pytest-runner
 flask-login
 flask-wtf
