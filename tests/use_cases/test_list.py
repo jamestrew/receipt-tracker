@@ -36,8 +36,6 @@ def receipt_results():
     ]
 
 
-
-
 def test_list_without_parameters(receipt_results):
     repo = Mock()
     repo.list.return_value = receipt_results

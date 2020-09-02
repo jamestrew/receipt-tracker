@@ -18,9 +18,7 @@ class ListUseCase:
         ]
 
     Args:
-        person_repo (list): List of person objects.
-        receipt_repo (list): List of receipt objects.
-        seller_repo (list): List of seller objects.
+        repo (sql repository):  I don't know what I'm doing lol.
     """
 
     def __init__(self, repo):
