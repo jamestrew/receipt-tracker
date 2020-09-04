@@ -2,7 +2,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import create_engine
 
-engine = create_engine('sqlite:///receipt.db')
+engine = create_engine('sqlite:///:memory:')
 db_session = scoped_session(sessionmaker(bind=engine))
 
 Base = declarative_base()
