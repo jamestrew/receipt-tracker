@@ -40,6 +40,3 @@ class Client(object):
             'fname': self.fname,
             'lname': self.lname
         }
-
-
-
