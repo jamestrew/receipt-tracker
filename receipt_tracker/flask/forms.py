@@ -7,11 +7,11 @@ from receipt_tracker.repo.models import Buyer
 
 class ClientForm(FlaskForm):
 
-    name = StringField('Full Name', validators=[DataRequired()])
+    client_name = StringField('Full Name', validators=[DataRequired()])
     submit = SubmitField('Add User')
 
-    def validate_name(self, name):
-        buyer = Buyer.query.filter_by(name=name.data).first()
+    def validate_name(self, client_name):
+        buyer = Buyer.query.filter_by(name=client_name.data).first()
         if buyer:
             raise ValidationError('Buyer already exists.')
 
@@ -26,5 +26,10 @@ class ReceiptForm(FlaskForm):
 
 class BusinessForm(FlaskForm):
 
-    name = StringField('Business Name', validators=[DataRequired()])
+    business_name = StringField('Business Name', validators=[DataRequired()])
     submit = SubmitField('Add Seller')
+
+    def validate_name(self, business_name):
+        buyer = Buyer.query.filter_by(name=business_name.data).first()
+        if buyer:
+            raise ValidationError('Buyer already exists.')

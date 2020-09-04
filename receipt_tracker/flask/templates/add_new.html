@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+
+    <!-- New Buyer -->
+    <form method="POST" , action="{{ url_for('add_client') }}">
+        {{ client_form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Buyer</legend>
+            <div class="form-group">
+                {{ client_form.client_name.label(class="form-control-label") }}
+
+                {% if client_form.client_name.errors %}
+                    {{ client_form.client_name(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in client_form.client_name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ client_form.client_name(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ client_form.submit(class="btn btn-outline-info")}}
+        </div>
+    </form>
+
+
+    <!-- New Seller -->
+    <form method="POST" action="{{ url_for('add_business') }}">
+        {{ business_form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Seller</legend>
+            <div class="form-group">
+                {{ business_form.business_name.label(class="form-control-label") }}
+
+                {% if business_form.business_name.errors %}
+                    {{ business_form.business_name(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in business_form.business_name.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ business_form.business_name(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ business_form.submit(class="btn btn-outline-info")}}
+        </div>
+    </form>
+</div>
+{% endblock content %}
