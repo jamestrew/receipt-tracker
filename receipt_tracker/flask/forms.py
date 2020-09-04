@@ -1,12 +1,19 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, FloatField, DateField, SubmitField
-from wtforms.validators import DataRequired
+from wtforms.validators import DataRequired, ValidationError
+
+from receipt_tracker.repo.models import Buyer
 
 
 class ClientForm(FlaskForm):
 
     name = StringField('Full Name', validators=[DataRequired()])
     submit = SubmitField('Add User')
+
+    def validate_name(self, name):
+        buyer = Buyer.query.filter_by(name=name.data).first()
+        if buyer:
+            raise ValidationError('Buyer already exists.')
 
 
 class ReceiptForm(FlaskForm):

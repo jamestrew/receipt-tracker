@@ -1,7 +1,8 @@
 import flask
 
-from receipt_tracker.flask import app
+from receipt_tracker.flask import app, db
 from receipt_tracker.flask.forms import ClientForm
+from receipt_tracker.repo.models import Buyer
 
 
 @app.route("/")
@@ -20,7 +21,10 @@ def new_client():
     form = ClientForm()
 
     if form.validate_on_submit():
-        flask.flash('New buyer added!', 'success')
+        client = Buyer(name=form.name.data)
+        db.add(client)
+        db.commit()
+        flask.flash(f'New buyer {form.name.data} added!', 'success')
         return flask.redirect(flask.url_for('home'))
 
     return flask.render_template('new_client.html', form=form)
