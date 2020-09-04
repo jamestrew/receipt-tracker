@@ -4,7 +4,8 @@ import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from receipt_tracker.repo.sql_tables import Base, Seller, Buyer, Receipt
+from receipt_tracker.repo.models import Seller, Buyer, Receipt
+from receipt_tracker.repo.database import Base
 
 
 @pytest.fixture(scope='session')
@@ -21,8 +22,8 @@ def db_session_empty():
 @pytest.fixture(scope='function')
 def db_data_init():
     return [
-        Buyer(first_name='James', last_name='Trew'),
-        Buyer(first_name='Eugene', last_name='Min'),
+        Buyer(name='James Trew'),
+        Buyer(name='Eugene Min'),
         Seller(name='Steam'),
         Seller(name='No Frills'),
         Seller(name='Amazon'),
