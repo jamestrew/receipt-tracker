@@ -5,8 +5,7 @@ from wtforms.validators import DataRequired
 
 class ClientForm(FlaskForm):
 
-    firstname = StringField('First Name', validators=[DataRequired()])
-    lastname = StringField('Last Name', validators=[DataRequired()])
+    name = StringField('Full Name', validators=[DataRequired()])
     submit = SubmitField('Add User')
 
 
@@ -15,8 +14,10 @@ class ReceiptForm(FlaskForm):
     date = DateField('Sale Date', validators=[DataRequired()])
     total = FloatField('Purchase Total', validators=[DataRequired()])
     description = StringField('Short Description')
+    submit = SubmitField('Add Receipt')
 
 
 class BusinessForm(FlaskForm):
 
     name = StringField('Business Name', validators=[DataRequired()])
+    submit = SubmitField('Add Seller')

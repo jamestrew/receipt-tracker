@@ -16,18 +16,17 @@ class Buyer(Base):
     __tablename__ = 'buyers'
 
     id = Column(Integer, primary_key=True)
-    first_name = Column(String(25), nullable=False)
-    last_name = Column(String(25), nullable=False)
+    name = Column(String(50), unique=True, nullable=False)
 
     def __repr__(self):
-        return f'Buyer({self.id}, {self.first_name}, {self.last_name})'
+        return f'Buyer({self.id}, {self.name})'
 
 
 class Seller(Base):
     __tablename__ = 'sellers'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(50), nullable=False)
+    name = Column(String(50), unique=True, nullable=False)
 
     def __repr__(self):
         return f'Seller({self.id}, {self.name})'
