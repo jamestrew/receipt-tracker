@@ -33,6 +33,18 @@ class ReceiptForm(FlaskForm):
         if date.data > datetime.date.today():
             raise ValidationError('Sale date must be in the past.')
 
+    def validate_buyer(self, buyer):
+        """Ensure buyer exists."""
+        entity = Buyer.query.filter_by(name=buyer.data).first()
+        if entity is None:
+            raise ValidationError('Buyer does not exist.')
+
+    def validate_seller(self, seller):
+        """Ensure seller exists."""
+        entity = Seller.query.filter_by(name=seller.data).first()
+        if entity is None:
+            raise ValidationError('Seller does not exist.')
+
 
 class BusinessForm(FlaskForm):
 
