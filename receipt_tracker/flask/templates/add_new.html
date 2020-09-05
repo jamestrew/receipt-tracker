@@ -1,6 +1,109 @@
-{% extends "layout.html" %}
+{% extends "base.html" %}
+{% block scripts %}
+    {{ super() }}
+    {{ datepicker.loader(theme='base') }} {# to load jQuery-ui #}
+    {{ datepicker.picker(id=".dp") }}
+{% endblock %}
+
 {% block content %}
 <div class="content-section">
+
+    <!-- New Receipt -->
+    <form method="POST" , action="{{ url_for('add_receipt') }}">
+        {{ receipt_form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Receipt</legend>
+
+            <!-- Buyer -->
+            <div class="form-group">
+                <label for=""></label>
+                {{ receipt_form.buyer.label(class="form-control-label") }}
+                <span class="asteriskField">*</span>
+
+                {% if receipt_form.buyer.errors %}
+                    {{ receipt_form.buyer(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in receipt_form.buyer.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ receipt_form.buyer(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <!-- Seller -->
+            <div class="form-group">
+                {{ receipt_form.seller.label(class="form-control-label") }}
+                <span class="asteriskField">*</span>
+
+                {% if receipt_form.seller.errors %}
+                    {{ receipt_form.seller(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in receipt_form.seller.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ receipt_form.seller(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <!-- Date -->
+            <div class="form-group">
+                {{ receipt_form.date.label(class="form-control-label") }}
+                <span class="asteriskField">*</span>
+
+                {% if receipt_form.date.errors %}
+                    {{ receipt_form.date(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in receipt_form.date.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ receipt_form.date(class="form-control form-control-lg dp") }}
+                {% endif %}
+            </div>
+
+            <!-- Total -->
+            <div class="form-group">
+                {{ receipt_form.total.label(class="form-control-label") }}
+                <span class="asteriskField">*</span>
+
+                {% if receipt_form.total.errors %}
+                    {{ receipt_form.total(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in receipt_form.total.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ receipt_form.total(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+                {{ receipt_form.description.label(class="form-control-label") }}
+
+                {% if receipt_form.description.errors %}
+                    {{ receipt_form.description(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in receipt_form.description.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ receipt_form.description(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group">
+            {{ receipt_form.submit(class="btn btn-outline-info")}}
+        </div>
+    </form>
+
 
     <!-- New Buyer -->
     <form method="POST" , action="{{ url_for('add_client') }}">
@@ -9,6 +112,7 @@
             <legend class="border-bottom mb-4">Buyer</legend>
             <div class="form-group">
                 {{ client_form.client_name.label(class="form-control-label") }}
+                <span class="asteriskField">*</span>
 
                 {% if client_form.client_name.errors %}
                     {{ client_form.client_name(class="form-control form-control-lg is-invalid") }}
@@ -35,6 +139,7 @@
             <legend class="border-bottom mb-4">Seller</legend>
             <div class="form-group">
                 {{ business_form.business_name.label(class="form-control-label") }}
+                <span class="asteriskField">*</span>
 
                 {% if business_form.business_name.errors %}
                     {{ business_form.business_name(class="form-control form-control-lg is-invalid") }}

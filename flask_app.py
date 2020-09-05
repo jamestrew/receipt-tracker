@@ -5,7 +5,6 @@ if __name__ == "__main__":
 
     app.run(debug=True)
 
-
     @app.teardown_appcontext
     def shudown_db_session(exeception=None):
         """Dispose of the current Session, if present.
