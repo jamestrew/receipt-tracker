@@ -28,7 +28,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ receipt_form.buyer(class="form-control form-control-lg") }}
+                    {{ receipt_form.buyer(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
 
@@ -45,7 +45,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ receipt_form.seller(class="form-control form-control-lg") }}
+                    {{ receipt_form.seller(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
 
@@ -62,7 +62,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ receipt_form.date(class="form-control form-control-lg dp") }}
+                    {{ receipt_form.date(class="form-control form-control-lg dp", autocomplete="off") }}
                 {% endif %}
             </div>
 
@@ -79,7 +79,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ receipt_form.total(class="form-control form-control-lg") }}
+                    {{ receipt_form.total(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
 
@@ -95,7 +95,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ receipt_form.description(class="form-control form-control-lg") }}
+                    {{ receipt_form.description(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
         </fieldset>
@@ -122,7 +122,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ client_form.client_name(class="form-control form-control-lg") }}
+                    {{ client_form.client_name(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
         </fieldset>
@@ -149,7 +149,7 @@
                         {% endfor %}
                     </div>
                 {% else %}
-                    {{ business_form.business_name(class="form-control form-control-lg") }}
+                    {{ business_form.business_name(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
         </fieldset>
