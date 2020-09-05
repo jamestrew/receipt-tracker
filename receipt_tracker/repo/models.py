@@ -38,7 +38,7 @@ class Receipt(Base):
     buyer = relationship('Buyer', back_populates='purchases')
 
     def __repr__(self):
-        return f'Receipt({self.id}, {self.date}, {self.total}, {self.description})'
+        return f'Receipt({self.id}, {self.buyer.name}, {self.seller.name}, {self.date}, {self.total}, {self.description}'
 
 
 Buyer.purchases = relationship('Receipt',

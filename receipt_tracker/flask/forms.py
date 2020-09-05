@@ -21,8 +21,8 @@ class ClientForm(FlaskForm):
 
 class ReceiptForm(FlaskForm):
 
-    buyer = StringField('Buyer Name', validators=[DataRequired()])
-    seller = StringField('Seller Name', validators=[DataRequired()])
+    buyer = StringField('Buyer Name', validators=[DataRequired()], id='buyer')
+    seller = StringField('Seller Name', validators=[DataRequired()], id='seller')
     date = DateField('Sale Date', validators=[DataRequired()])
     total = FloatField('Purchase Total', validators=[DataRequired()])
     description = StringField('Short Description')

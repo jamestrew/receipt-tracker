@@ -1,4 +1,5 @@
 import flask
+import json
 
 from receipt_tracker.flask import app, db
 from receipt_tracker.flask.forms import ClientForm, BusinessForm, ReceiptForm
@@ -13,6 +14,9 @@ def home():
 
 @app.route("/stats")
 def stats():
+    print(get_buyers(), '\n')
+    print(get_sellers(), '\n')
+    print([receipt for receipt in Receipt.query.all()])
     return flask.render_template('stats.html')
 
 
@@ -94,3 +98,21 @@ def add_receipt():
                                  business_form=business_form,
                                  receipt_form=receipt_form
                                  )
+
+
+def get_buyers():
+    return [buyer.name for buyer in Buyer.query.all()]
+
+
+def get_sellers():
+    return [seller.name for seller in Seller.query.all()]
+
+
+@app.route('/_autocomplete_buyer', methods=['GET'])
+def autocomplete_buyer():
+    return flask.Response(json.dumps(get_buyers()), mimetype='application/json')
+
+
+@app.route('/_autocomplete_seller', methods=['GET'])
+def autocomplete_seller():
+    return flask.Response(json.dumps(get_sellers()), mimetype='application/json')

@@ -3,7 +3,37 @@
     {{ super() }}
     {{ datepicker.loader(theme='base') }} {# to load jQuery-ui #}
     {{ datepicker.picker(id=".dp") }}
+
+    <!-- Autocomplete buyers -->
+    <script>
+        $(function () {
+            $.ajax({
+                url: '{{ url_for("autocomplete_buyer") }}'
+            }).done(function (data) {
+                $('#buyer').autocomplete({
+                    source: data,
+                    minLength: 2
+                });
+            });
+        });
+    </script>
+
+    <!-- Autocomplete sellers -->
+    <script>
+        $(function () {
+            $.ajax({
+                url: '{{ url_for("autocomplete_seller") }}'
+            }).done(function (data) {
+                $('#seller').autocomplete({
+                    source: data,
+                    minLength: 2
+                });
+            });
+        });
+    </script>
 {% endblock %}
+
+
 
 {% block content %}
 <div class="content-section">
@@ -159,3 +189,4 @@
     </form>
 </div>
 {% endblock content %}
+
