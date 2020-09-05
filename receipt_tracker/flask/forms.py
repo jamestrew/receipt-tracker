@@ -12,7 +12,7 @@ class ClientForm(FlaskForm):
     client_name = StringField('Full Name', validators=[DataRequired()])
     submit = SubmitField('Add User')
 
-    def validate_name(self, client_name):
+    def validate_client_name(self, client_name):
         """Ensure client_name is unique."""
         buyer = Buyer.query.filter_by(name=client_name.data).first()
         if buyer:
@@ -39,7 +39,7 @@ class BusinessForm(FlaskForm):
     business_name = StringField('Business Name', validators=[DataRequired()])
     submit = SubmitField('Add Seller')
 
-    def validate_name(self, business_name):
+    def validate_business_name(self, business_name):
         """Ensure business_name is unique."""
         seller = Seller.query.filter_by(name=business_name.data).first()
         if seller:

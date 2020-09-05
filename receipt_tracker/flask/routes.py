@@ -40,6 +40,7 @@ def add_client():
         db.add(client)
         db.commit()
         flask.flash(f'New buyer {client_form.client_name.data} added!', 'success')
+        return flask.redirect(flask.url_for('add_new'))
 
     return flask.render_template('add_new.html',
                                  client_form=client_form,
@@ -59,6 +60,7 @@ def add_business():
         db.add(seller)
         db.commit()
         flask.flash(f'New seller {business_form.business_name.data} added!', 'success')
+        return flask.redirect(flask.url_for('add_new'))
 
     return flask.render_template('add_new.html',
                                  client_form=client_form,
@@ -85,6 +87,7 @@ def add_receipt():
         db.add(receipt)
         db.commit()
         flask.flash(f'New receipt added!', 'success')
+        return flask.redirect(flask.url_for('add_new'))
 
     return flask.render_template('add_new.html',
                                  client_form=client_form,
