@@ -6,6 +6,8 @@ flake8
 flask
 flask-login
 flask-wtf
+flask-bootstrap
+flask-datepicker
 pip
 pytest
 pytest-runner
