@@ -11,7 +11,8 @@ app.config['SECRET_KEY'] = '2702a6eab639bd94773edb5af1875c53'
 Bootstrap(app)
 datepicker(app)
 
-db = SQLRepo(DEV_CONFIG).init_db()
+repo = SQLRepo(DEV_CONFIG)
+session = repo.init_db()
 
 
 from receipt_tracker.flask import routes  # noqa

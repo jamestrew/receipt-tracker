@@ -1,4 +1,4 @@
-from receipt_tracker.flask import app, db
+from receipt_tracker.flask import app, session
 
 if __name__ == "__main__":
     # Start the flask application with development settings.
@@ -12,4 +12,4 @@ if __name__ == "__main__":
         This will first call Session.close() method on the current Session, which releases any existing transactional/connection resources still being held; transactions specifically are rolled back. The Session is then discarded. Upon next usage within the same scope, the scoped_session will produce a new Session object.
 
         """
-        db.remove()
+        session.remove()

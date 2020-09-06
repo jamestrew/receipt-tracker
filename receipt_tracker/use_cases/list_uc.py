@@ -26,3 +26,13 @@ class ListUseCase:
 
     def execute(self):
         return self.repo.list()
+
+
+class GetNames:
+
+    def __init__(self, repo, table):
+        self.repo = repo
+        self.table = table
+
+    def execute(self):
+        return self.repo.list_names(self.table)

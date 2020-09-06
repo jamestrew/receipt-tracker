@@ -1,9 +1,10 @@
 import flask
 import json
 
-from receipt_tracker.flask import app, db
+from receipt_tracker.flask import app, repo, session
 from receipt_tracker.flask.forms import ClientForm, BusinessForm, ReceiptForm
 from receipt_tracker.repo.models import Buyer, Seller, Receipt
+from receipt_tracker.use_cases import list_uc
 
 
 @app.route("/")
@@ -14,8 +15,8 @@ def home():
 
 @app.route("/stats")
 def stats():
-    print(get_buyers(), '\n')
-    print(get_sellers(), '\n')
+    print(list_uc.GetNames(repo, Buyer).execute(), '\n')
+    print(list_uc.GetNames(repo, Seller).execute(), '\n')
     print([receipt for receipt in Receipt.query.all()])
     return flask.render_template('stats.html')
 
@@ -41,8 +42,8 @@ def add_client():
 
     if client_form.validate_on_submit():
         client = Buyer(name=client_form.client_name.data)
-        db.add(client)
-        db.commit()
+        session.add(client)
+        session.commit()
         flask.flash(f'New buyer {client_form.client_name.data} added!', 'success')
         return flask.redirect(flask.url_for('add_new'))
 
@@ -61,8 +62,8 @@ def add_business():
 
     if business_form.validate_on_submit():
         seller = Seller(name=business_form.business_name.data)
-        db.add(seller)
-        db.commit()
+        session.add(seller)
+        session.commit()
         flask.flash(f'New seller {business_form.business_name.data} added!', 'success')
         return flask.redirect(flask.url_for('add_new'))
 
@@ -88,8 +89,8 @@ def add_receipt():
                           total=receipt_form.total.data,
                           description=receipt_form.description.data
                           )
-        db.add(receipt)
-        db.commit()
+        session.add(receipt)
+        session.commit()
         flask.flash(f'New receipt added!', 'success')
         return flask.redirect(flask.url_for('add_new'))
 
@@ -100,19 +101,13 @@ def add_receipt():
                                  )
 
 
-def get_buyers():
-    return [buyer.name for buyer in Buyer.query.all()]
-
-
-def get_sellers():
-    return [seller.name for seller in Seller.query.all()]
-
-
 @app.route('/_autocomplete_buyer', methods=['GET'])
 def autocomplete_buyer():
-    return flask.Response(json.dumps(get_buyers()), mimetype='application/json')
+    return flask.Response(json.dumps(list_uc.GetNames(repo, Buyer).execute()),
+                          mimetype='application/json')
 
 
 @app.route('/_autocomplete_seller', methods=['GET'])
 def autocomplete_seller():
-    return flask.Response(json.dumps(get_sellers()), mimetype='application/json')
+    return flask.Response(json.dumps(list_uc.GetNames(repo, Seller).execute()),
+                          mimetype='application/json')
