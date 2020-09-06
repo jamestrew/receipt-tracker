@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Date, Float, ForeignKey, Integer, String
 from sqlalchemy.orm import relationship
 
-from receipt_tracker.repo.database import Base
+from receipt_tracker.repo.sql_repo import Base
 
 
 class Buyer(Base):
@@ -38,7 +38,7 @@ class Receipt(Base):
     buyer = relationship('Buyer', back_populates='purchases')
 
     def __repr__(self):
-        return f'Receipt({self.id}, {self.buyer.name}, {self.seller.name}, {self.date}, {self.total}, {self.description}'
+        return f'Receipt({self.id}, {self.buyer.name}, {self.seller.name}, {self.date}, {self.total}, {self.description})'
 
 
 Buyer.purchases = relationship('Receipt',

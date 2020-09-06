@@ -5,7 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from receipt_tracker.repo.models import Seller, Buyer, Receipt
-from receipt_tracker.repo.database import Base
+from receipt_tracker.repo.sql_repo import Base
 
 
 @pytest.fixture(scope='session')
