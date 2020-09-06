@@ -2,6 +2,13 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy import engine_from_config
 
+"""
+Variation on the declarative integration of SQLAlchemy with Flask.
+See: https://flask.palletsprojects.com/en/1.1.x/patterns/sqlalchemy/
+
+"""
+
+
 Base = declarative_base()
 
 

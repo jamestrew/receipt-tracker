@@ -15,6 +15,7 @@ def home():
 
 @app.route("/stats")
 def stats():
+    # Temporary prints for debugging
     print(list_uc.GetNames(repo, Buyer).execute(), '\n')
     print(list_uc.GetNames(repo, Seller).execute(), '\n')
     print([receipt for receipt in Receipt.query.all()])
@@ -23,6 +24,13 @@ def stats():
 
 @app.route("/add_new", methods=['GET', 'POST'])
 def add_new():
+    """
+    Main route to page for all three buyer, seller, receipt add forms.
+
+    Implemented using first solution by Grey Li (Update version).
+    See: https://stackoverflow.com/questions/18290142/multiple-forms-in-a-single-page-using-flask-and-wtforms
+
+    """
     client_form = ClientForm()
     business_form = BusinessForm()
     receipt_form = ReceiptForm()
@@ -103,11 +111,13 @@ def add_receipt():
 
 @app.route('/_autocomplete_buyer', methods=['GET'])
 def autocomplete_buyer():
+    """Helper route for jQuery autocomplete function."""
     return flask.Response(json.dumps(list_uc.GetNames(repo, Buyer).execute()),
                           mimetype='application/json')
 
 
 @app.route('/_autocomplete_seller', methods=['GET'])
 def autocomplete_seller():
+    """Helper route for jQuery autocomplete function."""
     return flask.Response(json.dumps(list_uc.GetNames(repo, Seller).execute()),
                           mimetype='application/json')
