@@ -1,6 +1,6 @@
 import datetime
 
-from receipt_tracker.entities.model_entities import Business, Client, Receipt
+from receipt_tracker.entities.model_entities import Business, Buyer, Receipt
 
 # Business Tests ################################################
 
@@ -36,14 +36,14 @@ def test_business_to_dict():
 
 # Client Tests ########################################################
 def test_person_init():
-    client = Client(id=1, name="James")
+    client = Buyer(id=1, name="James")
 
     assert client.id == 1
     assert client.name == "James"
 
 
 def test_person_from_dict():
-    client = Client.from_dict(
+    client = Buyer.from_dict(
         {
             'id': 1,
             'name': "James"
@@ -60,7 +60,7 @@ def test_client_to_dict():
         'name': "James"
     }
 
-    client = Client.from_dict(client_dict)
+    client = Buyer.from_dict(client_dict)
     assert client.to_dict() == client_dict
 
 
@@ -70,7 +70,7 @@ def test_receipt_init():
         id=1, date=datetime.datetime(2020, 8, 16),
         business=1, total=9.67,
         description="test description",
-        client=1
+        buyer=1
     )
 
     assert receipt.id == 1
@@ -78,7 +78,7 @@ def test_receipt_init():
     assert receipt.business == 1
     assert receipt.total == 9.67
     assert receipt.description == "test description"
-    assert receipt.client == 1
+    assert receipt.buyer == 1
 
 
 def test_receipt_from_dict():
@@ -89,7 +89,7 @@ def test_receipt_from_dict():
             'business': 1,
             'total': 9.67,
             'description': "test description",
-            'client': 1
+            'buyer': 1
         }
     )
 
@@ -98,7 +98,7 @@ def test_receipt_from_dict():
     assert receipt.business == 1
     assert receipt.total == 9.67
     assert receipt.description == "test description"
-    assert receipt.client == 1
+    assert receipt.buyer == 1
 
 
 def test_receipt_to_dict():
@@ -108,7 +108,7 @@ def test_receipt_to_dict():
         'business': 1,
         'total': 9.67,
         'description': "test description",
-        'client': 1
+        'buyer': 1
     }
 
     receipt = Receipt.from_dict(receipt_dct)
@@ -122,7 +122,7 @@ def test_receipt_init_no_descript():
     receipt = Receipt(
         id=1, date=datetime.datetime(2020, 8, 16),
         business=1, total=9.67,
-        client=1
+        buyer=1
     )
 
     assert receipt.id == 1
@@ -130,7 +130,7 @@ def test_receipt_init_no_descript():
     assert receipt.business == 1
     assert receipt.total == 9.67
     assert receipt.description is None
-    assert receipt.client == 1
+    assert receipt.buyer == 1
 
 
 def test_receipt_from_dict_no_descript():
@@ -140,7 +140,7 @@ def test_receipt_from_dict_no_descript():
             'date': datetime.datetime(2020, 8, 16),
             'business': 1,
             'total': 9.67,
-            'client': 1
+            'buyer': 1
         }
     )
 
@@ -149,7 +149,7 @@ def test_receipt_from_dict_no_descript():
     assert receipt.business == 1
     assert receipt.total == 9.67
     assert receipt.description is None
-    assert receipt.client == 1
+    assert receipt.buyer == 1
 
 
 def test_receipt_to_dict_no_descript():
@@ -158,7 +158,7 @@ def test_receipt_to_dict_no_descript():
         'date': datetime.datetime(2020, 8, 16),
         'business': 1,
         'total': 9.67,
-        'client': 1
+        'buyer': 1
     }
 
     receipt = Receipt.from_dict(receipt_dct)
@@ -167,5 +167,5 @@ def test_receipt_to_dict_no_descript():
                                  'business': 1,
                                  'total': 9.67,
                                  'description': None,
-                                 'client': 1
+                                 'buyer': 1
                                  }
