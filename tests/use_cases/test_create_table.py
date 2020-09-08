@@ -24,7 +24,7 @@ def test_buyer_basic_table(repo):
     assert test_table.header == ['id', 'name']
     assert test_table.rows == rows
     assert test_table.title == 'Buyers'
-    repo.table_rows.assert_called_with(Buyer, [])
+    repo.table_rows.assert_called_with(Buyer, ['id', 'name'])
 
 
 def test_buyer_selective_fields_table(repo):
@@ -61,4 +61,4 @@ def test_buyer_different_table_title(repo):
     assert test_table.header == ['id', 'name']
     assert test_table.rows == rows
     assert test_table.title == 'Test Table'
-    repo.table_rows.assert_called_with(Buyer, [])
+    repo.table_rows.assert_called_with(Buyer, ['id', 'name'])

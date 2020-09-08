@@ -15,11 +15,12 @@ def home():
 
 @app.route("/stats")
 def stats():
+    table = list_uc.create_table(repo, Receipt)
     # Temporary prints for debugging
     print(list_uc.get_entities(repo, Buyer, 'name'), '\n')
     print(list_uc.get_entities(repo, Seller, 'name'), '\n')
     print(Receipt.query.all())
-    return flask.render_template('stats.html')
+    return flask.render_template('stats.html', table=table)
 
 
 @app.route("/add_new", methods=['GET', 'POST'])
@@ -112,12 +113,12 @@ def add_receipt():
 @app.route('/_autocomplete_buyer', methods=['GET'])
 def autocomplete_buyer():
     """Helper route for jQuery autocomplete function."""
-    return flask.Response(json.dumps(list_uc.GetNames(repo, Buyer).execute()),
+    return flask.Response(json.dumps(list_uc.get_entities(repo, Buyer, 'name')),
                           mimetype='application/json')
 
 
 @app.route('/_autocomplete_seller', methods=['GET'])
 def autocomplete_seller():
     """Helper route for jQuery autocomplete function."""
-    return flask.Response(json.dumps(list_uc.GetNames(repo, Seller).execute()),
+    return flask.Response(json.dumps(list_uc.get_entities(repo, Seller, 'name')),
                           mimetype='application/json')

@@ -85,6 +85,6 @@ def create_table(repo, table, fields=[], table_title=None):
 
     return Table(
         header=header,
-        rows=repo.table_rows(table, fields),
+        rows=repo.table_rows(table, header),
         title=table_name
     )
