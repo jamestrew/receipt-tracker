@@ -20,3 +20,15 @@ def test_table_relationship(db_session):
 
     assert steam.name == 'Steam'
     assert str(steam.sales) == '[Receipt(1, James Trew, Steam, 2020-08-16, 9.67, Steam game)]'
+
+
+def test_table_column_names():
+    test_data = Buyer.__table__.columns.keys()
+
+    assert test_data == ['id', 'name']
+
+
+def test_table_name():
+    test_name = Buyer.__tablename__
+
+    assert test_name == 'buyers'

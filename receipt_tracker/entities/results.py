@@ -13,3 +13,11 @@ class Result(object):
 
     def to_dict(self):
         return {key: val for key, val in self.__dict__.items()}
+
+
+class Table:
+
+    def __init__(self, header, rows, title):
+        self.header = header
+        self.rows = rows
+        self.title = title

@@ -1,3 +1,4 @@
+from receipt_tracker.entities.results import Table
 
 
 class ListUseCase:
@@ -41,3 +42,49 @@ def get_entities(repo, table, attr=None):
     if attr is not None and attr not in table.__dict__:
         raise KeyError(f'{table} does not contain the {attr} attribute')
     return repo.list_entities(table, attr)
+
+
+def create_table(repo, table, fields=[], table_title=None):
+    """Instantiates a Table object containing with the following:
+
+
+    Parameters
+    ----------
+    repo : SQLRepo
+        SQLRepo object with current session.
+    table : SQL table model
+        Buyer, Seller, or Receipt table model.
+    fields : list, optional
+        A list of desired fields to be included in the table, by default []
+        (all fields).
+    table_title : str, optional
+        A name to be given to the table, by default None (results to SQL table
+        model name).
+
+    Returns
+    -------
+    Table
+        Table object with attr header, rows, title.
+
+    Raises
+    ------
+    KeyError
+        Raised if provided fields are not in table columns.
+    """
+
+    header = table.__table__.columns.keys() if not fields else fields
+
+    for field in fields:
+        if field not in table.__dict__:
+            raise KeyError(f'{table} does not contain the {field} attribute')
+
+    if table_title:
+        table_name = table_title
+    else:
+        table_name = table.__tablename__.capitalize()
+
+    return Table(
+        header=header,
+        rows=repo.table_rows(fields),
+        title=table_name
+    )
