@@ -53,5 +53,25 @@ class SQLRepo:
 
         if attr is None:
             return self.session.query(table).all()
-        return [getattr(entity, attr) for entity in self.session.query(table).all()]
+        return [val for (val, ) in self.session.query(getattr(table, attr)).all()]
 
+    def table_rows(self, table, fields):
+        """Generate a 2D list of table contents for create_table use case.
+
+        Parameters
+        ----------
+        table : SQL table model
+            Buyer, Seller, or Receipt table.
+        fields : list
+            A list of table columns, by default all is passed from use case.
+
+        Returns
+        -------
+        list(list)
+            2D list of table contents with desired fields from a SQL table.
+        """
+        rows = []
+        items = [getattr(table, attr) for attr in fields]
+        for row in self.session.query(*items).all():
+            rows.append([*row])
+        return rows
