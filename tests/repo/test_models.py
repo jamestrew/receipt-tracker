@@ -6,8 +6,8 @@ def test_table_initial_inserts(db_session):
     query_seller = db_session.query(Seller).all()
     query_receipt = db_session.query(Receipt).all()
 
-    assert str(query_buyer) == '[Buyer(1, James Trew), Buyer(2, Eugene Min)]'
-    assert str(query_seller) == '[Seller(1, Steam), Seller(2, No Frills), Seller(3, Amazon), Seller(4, Always Clean Coin Laundry)]'
+    assert str(query_buyer) == '[Buyer(1, James Trew), Buyer(2, Eugene Min), Buyer(3, Anna Trew)]'
+    assert str(query_seller) == '[Seller(1, Steam), Seller(2, No Frills), Seller(3, Amazon), Seller(4, Always Clean Coin Laundry), Seller(5, Eagle Dynamics)]'
     assert str(query_receipt) == '[Receipt(1, James Trew, Steam, 2020-08-16, 9.67, Steam game), Receipt(2, James Trew, No Frills, 2020-08-17, 17.86, Groceries), Receipt(3, Eugene Min, Amazon, 2020-08-18, 57.36, Random amazon purchases), Receipt(4, Eugene Min, Always Clean Coin Laundry, 2020-08-19, 2.5, None)]'
 
 

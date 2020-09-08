@@ -24,10 +24,12 @@ def db_data_init():
     return [
         Buyer(name='James Trew'),
         Buyer(name='Eugene Min'),
+        Buyer(name='Anna Trew'),
         Seller(name='Steam'),
         Seller(name='No Frills'),
         Seller(name='Amazon'),
         Seller(name='Always Clean Coin Laundry'),
+        Seller(name='Eagle Dynamics')
     ]
 
 
