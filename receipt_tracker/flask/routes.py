@@ -16,16 +16,16 @@ def home():
 @app.route("/stats")
 def stats():
     # Temporary prints for debugging
-    print(list_uc.GetNames(repo, Buyer).execute(), '\n')
-    print(list_uc.GetNames(repo, Seller).execute(), '\n')
-    print([receipt for receipt in Receipt.query.all()])
+    print(list_uc.get_entities(repo, Buyer, 'name'), '\n')
+    print(list_uc.get_entities(repo, Seller, 'name'), '\n')
+    print(Receipt.query.all())
     return flask.render_template('stats.html')
 
 
 @app.route("/add_new", methods=['GET', 'POST'])
 def add_new():
     """
-    Main route to page for all three buyer, seller, receipt add forms.
+    Main route to add_new page for all three buyer, seller, receipt add forms.
 
     Implemented using first solution by Grey Li (Update version).
     See: https://stackoverflow.com/questions/18290142/multiple-forms-in-a-single-page-using-flask-and-wtforms

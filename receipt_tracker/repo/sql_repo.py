@@ -25,23 +25,33 @@ class SQLRepo:
         self.Base.metadata.create_all(self.engine)
         return self.session
 
-    def list_names(self, table):
-        """Generate a list of names for tables Buyer and Seller
+    def list_entities(self, table, attr=None):
+        """Generate a list of SQL model entities or optionally model attributes.
+        Used to compile data relevant to a singular table (eg. a list of names in a
+        Buyer table).
 
         Parameters
         ----------
         table : SQL table
-            Buyer or Seller table with column 'names'.
+            Buyer, Seller or Receipt table.
+        attr : str or None, optional
+            Column name as a string, by default None
 
         Returns
         -------
-        [list]
-            List of all names in the table.
+        list
+            List of SQL model instances or attributes.
 
-            eg. table = Buyer
-            >>> self.session.query(table).all()
+        Example: session = database connection
+            >>> session.query(Buyer).all()
             [Buyer(1, James Trew), Buyer(2, Eugene Min)]
-            >>> self.list_names(table)
-            [James Trew, Eugene Min]
+            >>> repo.list_names(Buyer)
+            [Buyer(1, James Trew), Buyer(2, Eugene Min)]
+            >>> self.list_names(Buyer, 'name')
+            ['James Trew', 'Eugene Min']
         """
-        return [entity.name for entity in self.session.query(table).all()]
+
+        if attr is None:
+            return self.session.query(table).all()
+        return [getattr(entity, attr) for entity in self.session.query(table).all()]
+

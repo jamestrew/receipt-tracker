@@ -1,4 +1,3 @@
-# from receipt_tracker.entities import person, receipt, seller
 
 
 class ListUseCase:
@@ -36,3 +35,9 @@ class GetNames:
 
     def execute(self):
         return self.repo.list_names(self.table)
+
+
+def get_entities(repo, table, attr=None):
+    if attr is not None and attr not in table.__dict__:
+        raise KeyError(f'{table} does not contain the {attr} attribute')
+    return repo.list_entities(table, attr)
