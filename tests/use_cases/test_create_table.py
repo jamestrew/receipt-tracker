@@ -2,8 +2,8 @@ from unittest import mock
 
 import pytest
 
-from receipt_tracker.use_cases.list_uc import create_table
 from receipt_tracker.repo.models import Buyer
+from receipt_tracker.use_cases.list_uc import create_table
 
 
 @pytest.fixture

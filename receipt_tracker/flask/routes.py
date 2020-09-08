@@ -1,9 +1,10 @@
-import flask
 import json
 
+import flask
+
 from receipt_tracker.flask import app, repo, session
-from receipt_tracker.flask.forms import ClientForm, BusinessForm, ReceiptForm
-from receipt_tracker.repo.models import Buyer, Seller, Receipt
+from receipt_tracker.flask.forms import BusinessForm, ClientForm, ReceiptForm
+from receipt_tracker.repo.models import Buyer, Receipt, Seller
 from receipt_tracker.use_cases import list_uc
 
 
@@ -15,7 +16,7 @@ def home():
 
 @app.route("/stats")
 def stats():
-    table = list_uc.create_table(repo, Receipt)
+    table = list_uc.create_table(repo, Buyer)
     # Temporary prints for debugging
     print(list_uc.get_entities(repo, Buyer, 'name'), '\n')
     print(list_uc.get_entities(repo, Seller, 'name'), '\n')
