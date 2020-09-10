@@ -8,6 +8,8 @@ flask-login
 flask-wtf
 flask-bootstrap
 flask-datepicker
+flask-login
+flask-bcrypt
 pip
 pytest
 pytest-runner

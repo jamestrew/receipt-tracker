@@ -1,10 +1,12 @@
 import datetime
 
 from flask_wtf import FlaskForm
-from wtforms import DateField, FloatField, StringField, SubmitField
-from wtforms.validators import DataRequired, ValidationError
+from wtforms import (BooleanField, DateField, FloatField, PasswordField,
+                     StringField, SubmitField)
+from wtforms.validators import (DataRequired, Email, EqualTo, Length,
+                                ValidationError)
 
-from receipt_tracker.repo.models import Buyer, Seller
+from receipt_tracker.repo.models import Buyer, Seller, User
 
 
 class ClientForm(FlaskForm):
@@ -23,8 +25,8 @@ class ReceiptForm(FlaskForm):
 
     buyer = StringField('Buyer Name', validators=[DataRequired()], id='buyer')
     seller = StringField('Seller Name', validators=[DataRequired()], id='seller')
-    date = DateField('Sale Date', validators=[DataRequired()])
-    total = FloatField('Purchase Total', validators=[DataRequired()])
+    date = DateField('Sale Date', validators=[DataRequired()], render_kw={"placeholder": "yyyy-mm-dd"})
+    total = FloatField('Purchase Total', validators=[DataRequired()], render_kw={"aria-label": "Amount  (to the nearest dollar)"})
     description = StringField('Short Description')
     submit = SubmitField('Add Receipt')
 
@@ -56,3 +58,37 @@ class BusinessForm(FlaskForm):
         seller = Seller.query.filter_by(name=business_name.data).first()
         if seller:
             raise ValidationError('Seller already exists.')
+
+
+class RegistrationForm(FlaskForm):
+    username = StringField('Username',
+                           validators=[DataRequired(), Length(min=2, max=20)])
+
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password',
+                                     validators=[DataRequired(),
+                                                 EqualTo('password')])
+
+    submit = SubmitField('Sign Up')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('Username is already taken.')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('Email is already taken.')
+
+
+class LoginForm(FlaskForm):
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField('Remember Me')
+    submit = SubmitField('Login')

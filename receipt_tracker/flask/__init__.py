@@ -1,6 +1,8 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_datepicker import datepicker
+from flask_login import LoginManager
+from flask_bcrypt import Bcrypt
 
 from receipt_tracker.repo.sql_repo import SQLRepo
 from receipt_tracker.repo.sql_config import SQL_DEV_CONFIG
@@ -8,6 +10,11 @@ from receipt_tracker.repo.sql_config import SQL_DEV_CONFIG
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '2702a6eab639bd94773edb5af1875c53'
+
+bcrypt = Bcrypt(app)
+login_manager = LoginManager(app)
+login_manager.login_view = 'login'
+login_manager.login_message_category = 'info'
 Bootstrap(app)
 datepicker(app)
 

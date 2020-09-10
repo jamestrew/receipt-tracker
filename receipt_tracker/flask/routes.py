@@ -1,10 +1,12 @@
 import json
 
 import flask
+from flask_login import login_user, current_user, logout_user
 
-from receipt_tracker.flask import app, repo, session
-from receipt_tracker.flask.forms import BusinessForm, ClientForm, ReceiptForm
-from receipt_tracker.repo.models import Buyer, Receipt, Seller
+from receipt_tracker.flask import app, repo, session, bcrypt
+from receipt_tracker.flask.forms import (BusinessForm, ClientForm, LoginForm,
+                                         ReceiptForm, RegistrationForm)
+from receipt_tracker.repo.models import Buyer, Receipt, Seller, User
 from receipt_tracker.use_cases import list_uc
 
 
@@ -14,6 +16,51 @@ def home():
     return flask.render_template('home.html')
 
 
+@app.route("/register", methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        return flask.redirect(flask.url_for('home'))
+
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data,
+                    email=form.email.data,
+                    password=hashed_password)
+        session.add(user)
+        session.commit()
+        flask.flash(f'Account created for {form.username.data}!', 'success')
+        return flask.redirect(flask.url_for('home'))
+
+    return flask.render_template('register.html', title='Register', form=form)
+
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return flask.redirect(flask.url_for('home'))
+
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            flask.flash(f'Welcome back {user.username}', 'success')
+            next_page = flask.request.args.get('next')
+            return flask.redirect(next_page) if next_page else flask.redirect(flask.url_for('home'))
+        else:
+            flask.flash('Login Unsuccessful. Please check email and password', 'danger')
+    return flask.render_template('login.html', title='Login', form=form)
+
+
+@app.route("/logout")
+def logout():
+    logout_user()
+    return flask.redirect(flask.url_for('home'))
+
+
+# STATS ############################################################################
 @app.route("/view_buyers")
 def view_buyers():
     table = list_uc.create_table(repo, Buyer)
@@ -30,6 +77,8 @@ def view_sellers():
 def view_receipts():
     table = list_uc.create_table(repo, Receipt)
     return flask.render_template('stats.html', table=table, title="Receipts")
+
+# ADD NEW ##########################################################################
 
 
 @app.route("/add_new", methods=['GET', 'POST'])
