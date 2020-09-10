@@ -14,14 +14,22 @@ def home():
     return flask.render_template('home.html')
 
 
-@app.route("/stats")
-def stats():
+@app.route("/view_buyers")
+def view_buyers():
     table = list_uc.create_table(repo, Buyer)
-    # Temporary prints for debugging
-    print(list_uc.get_entities(repo, Buyer, 'name'), '\n')
-    print(list_uc.get_entities(repo, Seller, 'name'), '\n')
-    print(Receipt.query.all())
-    return flask.render_template('stats.html', table=table)
+    return flask.render_template('stats.html', table=table, title="Buyers")
+
+
+@app.route("/view_sellers")
+def view_sellers():
+    table = list_uc.create_table(repo, Seller)
+    return flask.render_template('stats.html', table=table, title="Sellers")
+
+
+@app.route("/view_receipts")
+def view_receipts():
+    table = list_uc.create_table(repo, Receipt)
+    return flask.render_template('stats.html', table=table, title="Receipts")
 
 
 @app.route("/add_new", methods=['GET', 'POST'])
