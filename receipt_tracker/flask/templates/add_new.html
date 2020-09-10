@@ -1,36 +1,36 @@
 {% extends "base.html" %}
 {% block scripts %}
-    {{ super() }}
-    {{ datepicker.loader(theme='base') }} {# to load jQuery-ui #}
-    {{ datepicker.picker(id=".dp") }}
+{{ super() }}
+{{ datepicker.loader(theme='base') }} {# to load jQuery-ui #}
+{{ datepicker.picker(id=".dp") }}
 
-    <!-- Autocomplete buyers -->
-    <script>
-        $(function () {
-            $.ajax({
-                url: '{{ url_for("autocomplete_buyer") }}'
-            }).done(function (data) {
-                $('#buyer').autocomplete({
-                    source: data,
-                    minLength: 2
-                });
+<!-- Autocomplete buyers -->
+<script>
+    $(function () {
+        $.ajax({
+            url: '{{ url_for("autocomplete_buyer") }}'
+        }).done(function (data) {
+            $('#buyer').autocomplete({
+                source: data,
+                minLength: 2
             });
         });
-    </script>
+    });
+</script>
 
-    <!-- Autocomplete sellers -->
-    <script>
-        $(function () {
-            $.ajax({
-                url: '{{ url_for("autocomplete_seller") }}'
-            }).done(function (data) {
-                $('#seller').autocomplete({
-                    source: data,
-                    minLength: 2
-                });
+<!-- Autocomplete sellers -->
+<script>
+    $(function () {
+        $.ajax({
+            url: '{{ url_for("autocomplete_seller") }}'
+        }).done(function (data) {
+            $('#seller').autocomplete({
+                source: data,
+                minLength: 2
             });
         });
-    </script>
+    });
+</script>
 {% endblock %}
 
 
@@ -51,14 +51,14 @@
                 <span class="asteriskField">*</span>
 
                 {% if receipt_form.buyer.errors %}
-                    {{ receipt_form.buyer(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in receipt_form.buyer.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
+                {{ receipt_form.buyer(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in receipt_form.buyer.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
                 {% else %}
-                    {{ receipt_form.buyer(class="form-control form-control-lg", autocomplete="off") }}
+                {{ receipt_form.buyer(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
 
@@ -68,14 +68,14 @@
                 <span class="asteriskField">*</span>
 
                 {% if receipt_form.seller.errors %}
-                    {{ receipt_form.seller(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in receipt_form.seller.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
+                {{ receipt_form.seller(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in receipt_form.seller.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
                 {% else %}
-                    {{ receipt_form.seller(class="form-control form-control-lg", autocomplete="off") }}
+                {{ receipt_form.seller(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
 
@@ -85,14 +85,14 @@
                 <span class="asteriskField">*</span>
 
                 {% if receipt_form.date.errors %}
-                    {{ receipt_form.date(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in receipt_form.date.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
+                {{ receipt_form.date(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in receipt_form.date.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
                 {% else %}
-                    {{ receipt_form.date(class="form-control form-control-lg dp", autocomplete="off") }}
+                {{ receipt_form.date(class="form-control form-control-lg dp", autocomplete="off") }}
                 {% endif %}
             </div>
 
@@ -102,14 +102,22 @@
                 <span class="asteriskField">*</span>
 
                 {% if receipt_form.total.errors %}
-                    {{ receipt_form.total(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in receipt_form.total.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
+                {{ receipt_form.total(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in receipt_form.total.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
                 {% else %}
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">$</span>
+                    </div>
                     {{ receipt_form.total(class="form-control form-control-lg", autocomplete="off") }}
+                    <div class="input-group-append">
+                        <span class="input-group-text">.00</span>
+                    </div>
+                </div>
                 {% endif %}
             </div>
 
@@ -118,14 +126,14 @@
                 {{ receipt_form.description.label(class="form-control-label") }}
 
                 {% if receipt_form.description.errors %}
-                    {{ receipt_form.description(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in receipt_form.description.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
+                {{ receipt_form.description(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in receipt_form.description.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
                 {% else %}
-                    {{ receipt_form.description(class="form-control form-control-lg", autocomplete="off") }}
+                {{ receipt_form.description(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
         </fieldset>
@@ -145,14 +153,14 @@
                 <span class="asteriskField">*</span>
 
                 {% if client_form.client_name.errors %}
-                    {{ client_form.client_name(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in client_form.client_name.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
+                {{ client_form.client_name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in client_form.client_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
                 {% else %}
-                    {{ client_form.client_name(class="form-control form-control-lg", autocomplete="off") }}
+                {{ client_form.client_name(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
         </fieldset>
@@ -172,14 +180,14 @@
                 <span class="asteriskField">*</span>
 
                 {% if business_form.business_name.errors %}
-                    {{ business_form.business_name(class="form-control form-control-lg is-invalid") }}
-                    <div class="invalid-feedback">
-                        {% for error in business_form.business_name.errors %}
-                            <span>{{ error }}</span>
-                        {% endfor %}
-                    </div>
+                {{ business_form.business_name(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in business_form.business_name.errors %}
+                    <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
                 {% else %}
-                    {{ business_form.business_name(class="form-control form-control-lg", autocomplete="off") }}
+                {{ business_form.business_name(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
         </fieldset>
@@ -189,4 +197,3 @@
     </form>
 </div>
 {% endblock content %}
-
