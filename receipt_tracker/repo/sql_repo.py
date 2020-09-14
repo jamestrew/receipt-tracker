@@ -2,6 +2,7 @@ from sqlalchemy import engine_from_config
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+
 """
 Variation on the declarative integration of SQLAlchemy with Flask.
 See: https://flask.palletsprojects.com/en/1.1.x/patterns/sqlalchemy/
@@ -55,7 +56,7 @@ class SQLRepo:
             return self.session.query(table).all()
         return [val for (val, ) in self.session.query(getattr(table, attr)).all()]
 
-    def table_rows(self, table, fields):
+    def basic_table_rows(self, table, fields):
         """Generate a 2D list of table contents for create_table use case.
 
         Parameters
@@ -74,4 +75,22 @@ class SQLRepo:
         items = [getattr(table, attr) for attr in fields]
         for row in self.session.query(*items).all():
             rows.append([*row])
+        return rows
+
+    def receipt_table_rows(self, fields):
+        from receipt_tracker.repo.models import Receipt
+
+        rows = []
+        for receipt in self.session.query(Receipt).all():
+
+            items = {
+                'id': receipt.id,
+                'date': receipt.date.strftime('%Y-%m-%d'),
+                'buyer': receipt.buyer.name,
+                'seller': receipt.seller.name,
+                'total': f'{receipt.total:.2f}',
+                'description': '' if receipt.description is None else receipt.description
+            }
+            items = [val for key, val in items.items() if key in fields]
+            rows.append(items)
         return rows
