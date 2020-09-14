@@ -3,10 +3,10 @@ import json
 import flask
 from flask_login import login_user, current_user, logout_user
 
-from receipt_tracker.flask import app, repo, session, bcrypt
+from receipt_tracker.flask import app, repo, session, bcrypt, login_manager
+from receipt_tracker.repo.models import Buyer, Receipt, Seller, User
 from receipt_tracker.flask.forms import (BusinessForm, ClientForm, LoginForm,
                                          ReceiptForm, RegistrationForm)
-from receipt_tracker.repo.models import Buyer, Receipt, Seller, User
 from receipt_tracker.use_cases import list_uc
 
 
@@ -14,6 +14,11 @@ from receipt_tracker.use_cases import list_uc
 @app.route("/home")
 def home():
     return flask.render_template('home.html')
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
 
 @app.route("/register", methods=['GET', 'POST'])

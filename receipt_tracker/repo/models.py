@@ -4,7 +4,6 @@ from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 
 from receipt_tracker.repo.sql_repo import Base
-from receipt_tracker.flask import login_manager
 
 
 class Buyer(Base):
@@ -48,11 +47,6 @@ Buyer.purchases = relationship('Receipt',
                                order_by=Receipt.id, back_populates='buyer')
 Seller.sales = relationship('Receipt',
                             order_by=Receipt.id, back_populates='seller')
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return User.query.get(int(user_id))
 
 
 class User(Base, UserMixin):
