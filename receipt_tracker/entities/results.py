@@ -2,7 +2,7 @@
 
 class Table:
 
-    def __init__(self, table, row_entities, fields=[], title=None, relationship=False):
+    def __init__(self, table, row_entities, fields=[], title=None):
         """Generate table data.
 
         Parameters
@@ -27,18 +27,17 @@ class Table:
         """
 
         self.table = table
-        self.fields = fields if fields else table.__table__.columns.keys()
+        self.row_type = row_entities[0]
+
+        for field in fields:
+            if field not in self.row_type.__dict__.keys():
+                raise KeyError(f'Requested field {field} does not exist in \
+                               {self.row_type.__class__.__name__}')
+
+        self.fields = fields if fields else list(self.row_type.__dict__.keys())
+        self.headers = self.row_type.columns(self.fields)
         self.rows = [row.create_row(self.fields) for row in row_entities]
         self.title = title if title else table.__tablename__.capitalize()
-        self.header = self._header_names(row_entities.pop())
-
-    def _header_names(self, row):
-        headers = []
-        for col_name in row.interested_cols(self.fields):
-            if col_name == 'id':
-                headers.append('ID')
-            headers.append(col_name.capitalize())
-        return headers
 
 
 class Cell:
@@ -50,7 +49,7 @@ class Cell:
 
 class Row:
 
-    @classmethod
+    @ classmethod
     def from_list(cls, lst):
         return cls(*lst)
 
