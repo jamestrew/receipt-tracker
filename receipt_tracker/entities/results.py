@@ -59,6 +59,9 @@ class Row:
     def create_row(self, fields):
         return [val.data for key, val in self.__dict__.items() if key in fields]
 
+    def __repr__(self) -> str:
+        return f'{self.__class__.__name__}(id={self.id.data})'
+
 
 class EntityRow(Row):
 

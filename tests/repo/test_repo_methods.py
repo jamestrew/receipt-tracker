@@ -1,22 +1,5 @@
-import pytest
-
 from receipt_tracker.repo.models import Buyer, Receipt
 from receipt_tracker.entities.results import EntityRow, ReceiptRow
-from receipt_tracker.repo.sql_repo import SQLRepo
-
-
-@pytest.fixture(scope='function')
-def repo(db_data_init, db_data_receipts):
-    CONFIG = {'sqlalchemy.url': 'sqlite:///:memory:'}
-    repo = SQLRepo(CONFIG)
-    session = repo.init_db()
-
-    session.add_all(db_data_init)
-    session.add_all(db_data_receipts)
-    session.commit()
-
-    yield repo
-    session.remove()
 
 
 # basic table_rows #####################################################
