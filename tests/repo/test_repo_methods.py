@@ -1,8 +1,7 @@
-from datetime import datetime
-
 import pytest
 
-from receipt_tracker.repo.models import Buyer
+from receipt_tracker.repo.models import Buyer, Receipt
+from receipt_tracker.entities.results import EntityRow, ReceiptRow
 from receipt_tracker.repo.sql_repo import SQLRepo
 
 
@@ -20,59 +19,33 @@ def repo(db_data_init, db_data_receipts):
     session.remove()
 
 
-# list_entities #####################################################################
-def test_list_buyers(repo):
-    test_results = repo.list_entities(Buyer, None)
+# basic table_rows #####################################################
+def test_basic_table_rows(repo):
+    test_table = repo.table_rows(Buyer)
 
-    assert str(test_results) == '[Buyer(1, James Trew), Buyer(2, Eugene Min), Buyer(3, Anna Trew)]'
-
-
-def test_list_buyers_name(repo):
-    test_results = repo.list_entities(Buyer, 'name')
-
-    assert test_results == ['James Trew', 'Eugene Min', 'Anna Trew']
-
-
-# basic table_rows ##################################################################
-def test_basic_table_rows_all_columns(repo):
-    test_table = repo.basic_table_rows(Buyer, ['id', 'name'])
-
-    assert test_table == [
-        [1, 'James Trew'],
-        [2, 'Eugene Min'],
-        [3, 'Anna Trew']
-    ]
+    assert len(test_table) == 3
+    assert isinstance(test_table[0], EntityRow) is True
+    assert test_table[0].id.data == 1
+    assert test_table[0].name.data == 'James Trew'
+    assert isinstance(test_table[0], EntityRow) is True
+    assert test_table[1].id.data == 2
+    assert test_table[1].name.data == 'Eugene Min'
+    assert isinstance(test_table[0], EntityRow) is True
+    assert test_table[2].id.data == 3
+    assert test_table[2].name.data == 'Anna Trew'
 
 
-def test_basic_table_rows_selective(repo):
-    test_table = repo.basic_table_rows(Buyer, ['name'])
+# receipt table rows ###################################################
+def test_receipt_table_rows(repo):
+    test_table = repo.table_rows(Receipt)
 
-    assert test_table == [
-        ['James Trew'],
-        ['Eugene Min'],
-        ['Anna Trew']
-    ]
-
-
-# receipt table rows ################################################################
-def test_receipt_table_rows_all_columns(repo):
-    test_table = repo.receipt_table_rows(['id', 'date', 'seller', 'total',
-                                          'buyer', 'description'])
-
-    assert test_table == [
-        [1, '2020-08-16', 'James Trew', 'Steam', '9.67', 'Steam game'],
-        [2, '2020-08-17', 'James Trew', 'No Frills', '17.86', 'Groceries'],
-        [3, '2020-08-18', 'Eugene Min', 'Amazon', '57.36', 'Random amazon purchases'],
-        [4, '2020-08-19', 'Eugene Min', 'Always Clean Coin Laundry', '2.50', ''],
-    ]
-
-
-def test_receipt_table_rows_selective(repo):
-    test_table = repo.receipt_table_rows(['id', 'seller', 'total', 'description'])
-
-    assert test_table == [
-        [1, 'Steam', '9.67', 'Steam game'],
-        [2, 'No Frills', '17.86', 'Groceries'],
-        [3, 'Amazon', '57.36', 'Random amazon purchases'],
-        [4, 'Always Clean Coin Laundry', '2.50', ''],
-    ]
+    assert len(test_table) == 4
+    assert isinstance(test_table[0], ReceiptRow) is True
+    assert test_table[0].id.data == 1
+    assert test_table[0].date.data == '2020-08-16'
+    assert test_table[0].buyer_id.data == 1
+    assert test_table[0].buyer_name.data == 'James Trew'
+    assert test_table[0].seller_id.data == 1
+    assert test_table[0].seller_name.data == 'Steam'
+    assert test_table[0].total.data == '9.67'
+    assert test_table[0].description.data == 'Steam game'

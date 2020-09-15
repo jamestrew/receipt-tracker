@@ -2,6 +2,8 @@ from sqlalchemy import engine_from_config
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
+from receipt_tracker.entities.results import EntityRow, ReceiptRow
+
 
 """
 Variation on the declarative integration of SQLAlchemy with Flask.
@@ -25,6 +27,36 @@ class SQLRepo:
     def init_db(self):
         self.Base.metadata.create_all(self.engine)
         return self.session
+
+    def table_rows(self, table):
+
+        if table.__tablename__ == 'receipts':
+            create_row = self._create_receipt_row
+        else:
+            create_row = self._create_entity_row
+
+        rows = []
+        for row in self.session.query(table).all():
+            rows.append(create_row(row))
+        return rows
+
+    def _create_receipt_row(self, row):
+        return ReceiptRow(
+            id=row.id,
+            date=row.date,
+            buyer=row.buyer,
+            seller=row.seller,
+            total=row.total,
+            description=row.description
+        )
+
+    def _create_entity_row(self, row):
+        return EntityRow(
+            id=row.id,
+            name=row.name
+        )
+
+    # DEPRECATED FUNCTIONS BELOW ###########################################
 
     def list_entities(self, table, attr=None):
         """Generate a list of SQL model entities or optionally model attributes.
@@ -75,22 +107,4 @@ class SQLRepo:
         items = [getattr(table, attr) for attr in fields]
         for row in self.session.query(*items).all():
             rows.append([*row])
-        return rows
-
-    def receipt_table_rows(self, fields):
-        from receipt_tracker.repo.models import Receipt
-
-        rows = []
-        for receipt in self.session.query(Receipt).all():
-
-            items = {
-                'id': receipt.id,
-                'date': receipt.date.strftime('%Y-%m-%d'),
-                'buyer': receipt.buyer.name,
-                'seller': receipt.seller.name,
-                'total': f'{receipt.total:.2f}',
-                'description': '' if receipt.description is None else receipt.description
-            }
-            items = [val for key, val in items.items() if key in fields]
-            rows.append(items)
         return rows
