@@ -80,12 +80,11 @@ def view_sellers():
 
 @app.route("/view_receipts")
 def view_receipts():
-    table = list_uc.create_table(repo, Receipt)
+    table = list_uc.create_table(repo, Receipt, fields=['id', 'date', 'buyer_name', 'seller_name', 'total', 'description'])
     return flask.render_template('stats.html', table=table, title="Receipts")
 
+
 # ADD NEW ##########################################################################
-
-
 @app.route("/add_new", methods=['GET', 'POST'])
 def add_new():
     """

@@ -1,5 +1,4 @@
 
-
 class Table:
 
     def __init__(self, table, row_entities, fields=[], title=None):
@@ -16,9 +15,6 @@ class Table:
         title : str
             A name to be given to the table.
             If None (defaults to SQL table model name capitalized).
-        relationship : bool
-            Determine whether relationships are shown (ie. buyer name instead of
-            buyer id in receipt).
 
         Raises
         ------
