@@ -75,6 +75,6 @@ class ReceiptRow(Row):
         self.buyer_name = Cell('Buyer Name', buyer.name)
         self.seller_id = Cell('Seller ID', seller.id)
         self.seller_name = Cell('Seller Name', seller.name)
-        self.total = Cell('Total', f'{total:.2f}')
+        self.total = Cell('Total', f'${total:.2f}')
         self.description = Cell('Description',
                                 '' if description is None else description)

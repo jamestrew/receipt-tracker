@@ -8,7 +8,9 @@ from receipt_tracker.repo.sql_repo import SQLRepo
 from receipt_tracker.repo.sql_config import SQL_DEV_CONFIG
 
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='',
+            static_folder='static')
 app.config['SECRET_KEY'] = '2702a6eab639bd94773edb5af1875c53'
 
 bcrypt = Bcrypt(app)
