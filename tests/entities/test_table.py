@@ -95,8 +95,8 @@ def test_receipt_table_init_defaults(receipt_ents):
         'seller_name', 'total', 'description'
     ]
     assert test_table.rows == [
-        [1, '2019-12-04', 1, 'James Trew', 1, 'Steam', '50.50', ''],
-        [2, '2019-12-05', 1, 'James Trew', 1, 'Steam', '2.00', 'Game']
+        [1, '2019-12-04', 1, 'James Trew', 1, 'Steam', '$50.50', ''],
+        [2, '2019-12-05', 1, 'James Trew', 1, 'Steam', '$2.00', 'Game']
     ]
     assert test_table.title == 'Receipts'
     assert test_table.headers == [
@@ -113,8 +113,8 @@ def test_receipt_table_init_modified(receipt_ents):
     assert test_table.table == Receipt
     assert test_table.fields == fields
     assert test_table.rows == [
-        ['2019-12-04', 'James Trew', 'Steam', '50.50'],
-        ['2019-12-05', 'James Trew', 'Steam', '2.00']
+        ['2019-12-04', 'James Trew', 'Steam', '$50.50'],
+        ['2019-12-05', 'James Trew', 'Steam', '$2.00']
     ]
     assert test_table.title == title
     assert test_table.headers == ['Date', 'Buyer Name', 'Seller Name', 'Total']

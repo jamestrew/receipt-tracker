@@ -30,5 +30,5 @@ def test_receipt_table_rows(repo):
     assert test_table[0].buyer_name.data == 'James Trew'
     assert test_table[0].seller_id.data == 1
     assert test_table[0].seller_name.data == 'Steam'
-    assert test_table[0].total.data == '9.67'
+    assert test_table[0].total.data == '$9.67'
     assert test_table[0].description.data == 'Steam game'

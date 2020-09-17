@@ -54,7 +54,7 @@ def test_receiptrow_init(receiptrow):
     assert receiptrow.buyer_name.data == 'James Trew'
     assert receiptrow.seller_id.data == 1
     assert receiptrow.seller_name.data == 'Steam'
-    assert receiptrow.total.data == '50.50'
+    assert receiptrow.total.data == '$50.50'
     assert receiptrow.description.data == ''
 
 
@@ -69,7 +69,7 @@ def test_receiptrow_col_all(receiptrow):
         'Seller Name', 'Total', 'Description'
     ]
     assert receiptrow.create_row(fields) == [
-        1, '2019-12-04', 1, 'James Trew', 1, 'Steam', '50.50', ''
+        1, '2019-12-04', 1, 'James Trew', 1, 'Steam', '$50.50', ''
     ]
 
 
@@ -82,5 +82,5 @@ def test_receiptrow_col_selective(receiptrow):
         'ID', 'Date', 'Buyer Name', 'Seller Name', 'Total', 'Description'
     ]
     assert receiptrow.create_row(fields) == [
-        1, '2019-12-04', 'James Trew', 'Steam', '50.50', ''
+        1, '2019-12-04', 'James Trew', 'Steam', '$50.50', ''
     ]
