@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% block scripts %}
 {{ super() }}
-{{ datepicker.loader(theme='base') }} {# to load jQuery-ui #}
-{{ datepicker.picker(id=".dp") }}
 
 <!-- Autocomplete buyers -->
 <script>
@@ -90,7 +88,7 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                {{ receipt_form.date(class="form-control form-control-lg dp", autocomplete="off") }}
+                {{ receipt_form.date(class="form-control form-control-lg", autocomplete="off") }}
                 {% endif %}
             </div>
 
